@@ -1,0 +1,15 @@
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\bin\Debug\net7.0\Infrastructure.deps.json
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\bin\Debug\net7.0\Infrastructure.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\bin\Debug\net7.0\Infrastructure.pdb
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\bin\Debug\net7.0\ApplicationCore.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\bin\Debug\net7.0\ApplicationCore.pdb
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.AssemblyReference.cache
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfoInputs.cache
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.AssemblyInfo.cs
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CoreCompileInputs.cache
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.csproj.CopyComplete
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll

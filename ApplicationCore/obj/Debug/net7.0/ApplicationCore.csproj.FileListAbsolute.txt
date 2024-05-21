@@ -1,0 +1,12 @@
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\bin\Debug\net7.0\ApplicationCore.deps.json
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\bin\Debug\net7.0\ApplicationCore.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\bin\Debug\net7.0\ApplicationCore.pdb
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.csproj.AssemblyReference.cache
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.GeneratedMSBuildEditorConfig.editorconfig
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.AssemblyInfoInputs.cache
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.AssemblyInfo.cs
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.csproj.CoreCompileInputs.cache
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\refint\ApplicationCore.dll
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ApplicationCore.pdb
+D:\Desktop\usbb\Programacion\Ahirisk\Backend\WebApiAhirisk\ApplicationCore\obj\Debug\net7.0\ref\ApplicationCore.dll
