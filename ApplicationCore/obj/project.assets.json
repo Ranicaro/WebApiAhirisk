@@ -712,19 +712,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Juan Maldonado\\.nuget\\packages\\": {}
+    "C:\\Users\\Nicolas\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\ApplicationCore\\ApplicationCore.csproj",
+      "projectUniqueName": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\ApplicationCore\\ApplicationCore.csproj",
       "projectName": "ApplicationCore",
-      "projectPath": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\ApplicationCore\\ApplicationCore.csproj",
-      "packagesPath": "C:\\Users\\Juan Maldonado\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\ApplicationCore\\obj\\",
+      "projectPath": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\ApplicationCore\\ApplicationCore.csproj",
+      "packagesPath": "C:\\Users\\Nicolas\\.nuget\\packages\\",
+      "outputPath": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\ApplicationCore\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Juan Maldonado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nicolas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -744,11 +748,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -780,7 +779,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

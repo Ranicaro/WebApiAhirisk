@@ -2999,19 +2999,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Juan Maldonado\\.nuget\\packages\\": {}
+    "C:\\Users\\Nicolas\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\WebApiAhisrisk\\WebApiAhisrisk.csproj",
+      "projectUniqueName": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\WebApiAhisrisk\\WebApiAhisrisk.csproj",
       "projectName": "WebApiAhisrisk",
-      "projectPath": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\WebApiAhisrisk\\WebApiAhisrisk.csproj",
-      "packagesPath": "C:\\Users\\Juan Maldonado\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\WebApiAhisrisk\\obj\\",
+      "projectPath": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\WebApiAhisrisk\\WebApiAhisrisk.csproj",
+      "packagesPath": "C:\\Users\\Nicolas\\.nuget\\packages\\",
+      "outputPath": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\WebApiAhisrisk\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Juan Maldonado\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nicolas\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3025,11 +3029,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\ApplicationCore\\ApplicationCore.csproj": {
-              "projectPath": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\ApplicationCore\\ApplicationCore.csproj"
+            "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\ApplicationCore\\ApplicationCore.csproj": {
+              "projectPath": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\ApplicationCore\\ApplicationCore.csproj"
             },
-            "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\Juan Maldonado\\OneDrive\\Escritorio\\AhiriskV2\\Infrastructure\\Infrastructure.csproj"
+            "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "D:\\Desktop\\usbb\\Programacion\\Ahirisk\\Backend\\WebApiAhirisk\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }
@@ -3038,11 +3042,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3097,7 +3096,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

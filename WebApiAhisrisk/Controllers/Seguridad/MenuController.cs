@@ -162,12 +162,13 @@ namespace WebApiAhisrisk.Controllers.Seguridad
         {
             try
             {
-                if (!GetUserId(out int iIDUsuario))
+                if (!GetUserId(out int iIDUsuario) ||
+                    !GetPerfilId(out int iIDPerfil))
                 {
                     return Unauthorized();
                 }
 
-                var res = await ListarMenuPerfil();
+                var res = await ListarMenuPerfil(iIDPerfil);
                 return Ok(res);
             }
             catch (Exception ex)
@@ -414,7 +415,7 @@ namespace WebApiAhisrisk.Controllers.Seguridad
                 return "Error: Editando MenuPerfil";
             }
         }
-        private async Task<List<mMenuPerfiles>> ListarMenuPerfil()
+        private async Task<List<mMenuPerfiles>> ListarMenuPerfil(int iIDPerfil)
         {
             try
             {
@@ -422,7 +423,8 @@ namespace WebApiAhisrisk.Controllers.Seguridad
                                  join m in _context.tblMenu on new { mp.iIDMenu, mp.bActivo } equals new { iIDMenu = (int?)m.iIDMenu, m.bActivo }
 
                                  join p in _context.tblPerfiles on new { mp.iIDPerfil, mp.bActivo } equals new { iIDPerfil = (int?)p.iIDPerfil, p.bActivo }
-                                 where mp.bActivo == true
+                                 where mp.bActivo == true && mp.iIDPerfil == iIDPerfil
+                                 orderby m.iPosicion ascending
                                  select new mMenuPerfiles
                                  {
                                      iIDMenuPerfil = mp.iIDMenuPerfil,
