@@ -33,7 +33,7 @@ builder.Services.AddDbContext<DBAhiriskV1Context>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
-        builder => builder.WithOrigins("http://127.0.0.1:4040", "https://8ee1-190-68-49-101.ngrok-free.app", "http://localhost:4200") // Aquí debes colocar la URL de tu frontend
+        builder => builder.WithOrigins("http://127.0.0.1:4200", "https://8ee1-190-68-49-101.ngrok-free.app", "http://localhost:4200") // Aquí debes colocar la URL de tu frontend
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials());

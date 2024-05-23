@@ -176,6 +176,25 @@ namespace WebApiAhisrisk.Controllers.Seguridad
                 throw;
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> GetMenus()
+        {
+            try
+            {
+                if (!GetUserId(out int iIDUsuario))
+                {
+                    return Unauthorized();
+                }
+
+                var res = await GetMenusList();
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("MenuController: Error en el servicio GetMenus ", ex);
+                throw;
+            }
+        }
         #endregion
 
         #region Methods   
@@ -418,6 +437,29 @@ namespace WebApiAhisrisk.Controllers.Seguridad
             catch (Exception ex)
             {
                 await GenericUtils.Log("MenuController: Error en el Metodo ListarMenuPerfil ", ex);
+                throw;
+            }
+        }
+        private async Task<List<mMenuLista>> GetMenusList()
+        {
+            try
+            {
+                var res = await _context.tblMenu.Where(x => x.bActivo == true)
+                  .Select(x => new mMenuLista
+                  {
+                      id = x.iIDMenu,
+                      title = x.tDescripcion,
+                      posicion = x.iPosicion,
+                      link = x.tUrl,
+                      icon = x.tIcono
+                  })
+                  .ToListAsync();
+                return res;
+            }
+            catch (Exception ex)
+            {
+
+                await GenericUtils.Log("UsuariosController: Error en el Metodo GetMenuList ", ex);
                 throw;
             }
         }

@@ -28,4 +28,15 @@
         public DateTime? dtFechaInactivacion { get; set; }
         public bool? bActivo { get; set; }
     }
+
+    public class mMenuLista
+    {
+        public int? id { get; set; }
+        public string? title { get; set; }
+        public int? posicion { get; set; }
+        public string? link { get; set; }
+        public string? icon { get; set; }
+        public mMenuLista? children { get; set; }
+
+    }
 }

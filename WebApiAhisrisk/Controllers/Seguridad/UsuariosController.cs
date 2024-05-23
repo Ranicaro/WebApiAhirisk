@@ -25,15 +25,15 @@ namespace WebApiAhirisk.Controllers.Seguridad
 
         #region Services
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<IActionResult> PostCrearUsuario(mCrearUsuario usuario)
         {
             try
             {
-                if (!GetUserId(out int iIDUsuario))
-                {
-                    return Unauthorized();
-                }
+                //if (!GetUserId(out int iIDUsuario))
+                //{
+                //    return Unauthorized();
+                //}
                 var resValidarEmail = await ValidarEmail(usuario.tEmail);
 
                 if (resValidarEmail)
@@ -42,7 +42,7 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 }
                 //Guid tContrasenna = Guid.NewGuid();
                 //usuario.tPassword = tContrasenna.ToString().Substring(0, 10);
-                var resiIDUsuario = await CrearUsuario(usuario, iIDUsuario);
+                var resiIDUsuario = await CrearUsuario(usuario, 1);
                 if (resiIDUsuario == null)
                 {
                     return StatusCode(500, "No se pudo crear el usuario, Comuniquese con la mesa de servicio");
@@ -50,13 +50,20 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 mUsuarioEntidad usuarioE = new mUsuarioEntidad();
                 usuarioE.iIDUsuario = resiIDUsuario;
                 usuarioE.iIDEntidad = 1;
-                usuarioE.iIDUsuarioCreacion = iIDUsuario;
+                usuarioE.iIDUsuarioCreacion = 1;
                 var resCrearEntidadUsuario = await CrearUsuarioEntidad(usuarioE);
                 if (!resCrearEntidadUsuario.Contains("UsuarioEntidad Creado Correctamente"))
                 {
                     return BadRequest("Error al crear EntidadUsuario, Comunicarse con la mesa de servicio ");
                 }
-                var resCrearUsuarioPerfil = await CrearUsuarioPerfil(usuario.ListaPerfil, resiIDUsuario, iIDUsuario);
+
+                List<mPerfil> mListPerfil = new List<mPerfil>();
+                mPerfil perfil = new()
+                {
+                    iIDPerfil = 1
+                };
+                mListPerfil.Add(perfil);
+                var resCrearUsuarioPerfil = await CrearUsuarioPerfil(mListPerfil, resiIDUsuario, 1);
 
 
                 if (!resCrearUsuarioPerfil.Contains("PerfilUsuario Creado Correctamente"))
@@ -229,9 +236,9 @@ namespace WebApiAhirisk.Controllers.Seguridad
             try
             {
                 var res = await (from u in _context.tblUsuarios
-                                 join m in _context.tblMultivalores on new { iIDSubTabla = u.iIDSubTablaTipoDoc, tIDValor = u.tIDValorTipoDoc, u.bActivo} equals new { iIDSubTabla = (int?)m.iIDSubTabla, m.tIDValor, m.bActivo}
-                                 join mi in _context.tblMultivaloresIdiomas on new { iIDSubTabla = (int?)m.iIDSubTabla, m.tIDValor, m.bActivo} equals new {mi.iIDSubTabla, mi.tIDValor, mi.bActivo}
-                                 where u.bActivo == true
+                                 //join m in _context.tblMultivalores on new { iIDSubTabla = u.iIDSubTablaTipoDoc, tIDValor = u.tIDValorTipoDoc, u.bActivo} equals new { iIDSubTabla = (int?)m.iIDSubTabla, m.tIDValor, m.bActivo}
+                                 //join mi in _context.tblMultivaloresIdiomas on new { iIDSubTabla = (int?)m.iIDSubTabla, m.tIDValor, m.bActivo} equals new {mi.iIDSubTabla, mi.tIDValor, mi.bActivo}
+                                 //where u.bActivo == true
                                  select new mUsuarios
                                 {
                                     iIDUsuario = u.iIDUsuario,
@@ -256,25 +263,29 @@ namespace WebApiAhirisk.Controllers.Seguridad
         {
             try
             {
-                int cont = 0;
-                foreach (var uPerfil in ListPerfil)
+                if(ListPerfil != null)
                 {
-                    cont++;
-                    tblUsuariosPerfiles perfilU = new tblUsuariosPerfiles();
-                    perfilU.iIDUsuario = iIDUsuario;
-                    perfilU.iIDPerfil = uPerfil.iIDPerfil;
-                    perfilU.iIDUsuarioCreacion = iIDUsuarioCreacion;
-                    perfilU.dtFechaCreacion = DateTime.Now;
-                    perfilU.bActivo = true;
-                    _context.tblUsuariosPerfiles.Add(perfilU);
-                    await _context.SaveChangesAsync();
-                }
-                if (cont == 0)
-                {
-                    return "No se creo UsuarioPerfil";
-                }
+                    int cont = 0;
+                    foreach (var uPerfil in ListPerfil)
+                    {
+                        cont++;
+                        tblUsuariosPerfiles perfilU = new tblUsuariosPerfiles();
+                        perfilU.iIDUsuario = iIDUsuario;
+                        perfilU.iIDPerfil = uPerfil.iIDPerfil;
+                        perfilU.iIDUsuarioCreacion = iIDUsuarioCreacion;
+                        perfilU.dtFechaCreacion = DateTime.Now;
+                        perfilU.bActivo = true;
+                        _context.tblUsuariosPerfiles.Add(perfilU);
+                        await _context.SaveChangesAsync();
+                    }
+                    if (cont == 0)
+                    {
+                        return "No se creo UsuarioPerfil";
+                    }
 
-                return "PerfilUsuario Creado Correctamente";
+                    return "PerfilUsuario Creado Correctamente";
+                }
+                return "Error La Lista de Perfil viene vacia";
             }
             catch (Exception ex)
             {
