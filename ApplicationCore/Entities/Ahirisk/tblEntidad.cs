@@ -12,6 +12,8 @@ namespace ApplicationCore.Entities.Ahirisk
         {
             tblEntidadPerfilesNavigation = new HashSet<tblEntidadPerfiles>();
             tblEntidadUsuarioNavigation = new HashSet<tblEntidadUsuario>();
+            tblEntidadParametrosNavigation = new HashSet<tblEntidadParametros>();
+            tblEntidadPasswordSettingsNavigation = new HashSet<tblEntidadPasswordSettings>();
         }
         public int iIDEntidad { get; set; }
         public int iIDSubTablaTipoDoc { get; set; }
@@ -43,7 +45,8 @@ namespace ApplicationCore.Entities.Ahirisk
         public virtual tblMultivalores tblMultivaloresRegimenNavigation { get; set; }
         public virtual ICollection<tblEntidadPerfiles> tblEntidadPerfilesNavigation { get; set; }
         public virtual ICollection<tblEntidadUsuario> tblEntidadUsuarioNavigation { get; set; }
-
+        public virtual ICollection<tblEntidadParametros> tblEntidadParametrosNavigation { get; set; }
+        public virtual ICollection<tblEntidadPasswordSettings> tblEntidadPasswordSettingsNavigation { get; set; }
 
     }
 }

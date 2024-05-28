@@ -9,6 +9,12 @@ namespace ApplicationCore.Entities.Ahirisk
     public class tblIdiomas
     {
 
+        public tblIdiomas()
+        {
+            tblParametrosIdiomasNavigation = new HashSet<tblParametrosIdiomas>();
+            tblPasswordSettingsIdiomasNavigation = new HashSet<tblPasswordSettingsIdiomas>();
+        }
+
         public int iIDIdioma { get; set; }
         public string? tCodigo { get; set; }
         public string? tCodigoPais { get; set; }
@@ -25,5 +31,7 @@ namespace ApplicationCore.Entities.Ahirisk
         public virtual tblUsuarios tblUsuarioCreacionNavigation { get; set; }
         public virtual tblUsuarios tblUsuarioModificacionNavigation { get; set; }
         public virtual tblUsuarios tblUsuarioInactivacionNavigation { get; set; }
+        public virtual ICollection<tblParametrosIdiomas> tblParametrosIdiomasNavigation { get; set; }
+        public virtual ICollection<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomasNavigation { get; set; }
     }
 }

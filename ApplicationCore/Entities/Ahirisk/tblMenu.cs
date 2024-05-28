@@ -11,6 +11,7 @@ namespace ApplicationCore.Entities.Ahirisk
         public tblMenu() 
         {
             tblMenuPerfilesNavigation = new HashSet<tblMenuPerfiles>();
+            InverseiIDPadreNavigation = new HashSet<tblMenu>();
         }
         public int iIDMenu { get; set; }
         public string? tDescripcion { get; set; }
@@ -32,6 +33,9 @@ namespace ApplicationCore.Entities.Ahirisk
         public virtual tblUsuarios iIDUsuarioCreacionNavigation { get; set; }
         public virtual tblUsuarios iIDUsuarioModificacionNavigation { get; set; }
         public virtual tblUsuarios iIDUsuarioInactivacionNavigation { get; set; }
+        public virtual tblMenu iIDPadreNavigation { get; set; }
         public virtual ICollection<tblMenuPerfiles> tblMenuPerfilesNavigation { get; set; }
+
+        public virtual ICollection<tblMenu> InverseiIDPadreNavigation { get; set; }
     }
 }

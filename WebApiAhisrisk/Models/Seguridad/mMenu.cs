@@ -1,4 +1,7 @@
-﻿namespace WebApiAhisrisk.Models.Seguridad
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace WebApiAhisrisk.Models.Seguridad
 {
     public class mMenu
     {
@@ -36,7 +39,16 @@
         public int? posicion { get; set; }
         public string? link { get; set; }
         public string? icon { get; set; }
-        public mMenuLista? children { get; set; }
+        //public List<mMenuLista>? children { get; set; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)] 
+        public List<mMenuLista>? children { get; set; }
+
+        public mMenuLista()
+        {
+            children = new List<mMenuLista>();
+        }
+
 
     }
 }

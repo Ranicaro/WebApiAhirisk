@@ -26,6 +26,12 @@ namespace Infrastructure.Data
         public virtual DbSet<tblIdiomas> tblIdiomas { get; set; }
         public virtual DbSet<tblEntidadUsuario> tblEntidadUsuario { get; set; }
         public virtual DbSet<tblUsuariosPerfiles> tblUsuariosPerfiles { get; set; }
+        public virtual DbSet<tblEntidadParametros> tblEntidadParametros { get; set; }
+        public virtual DbSet<tblParametros> tblParametros { get; set; }
+        public virtual DbSet<tblParametrosIdiomas> tblParametrosIdiomas { get; set; }
+        public virtual DbSet<tblEntidadPasswordSettings> tblEntidadPasswordSettings { get; set; }
+        public virtual DbSet<tblPasswordSettings> tblPasswordSettings { get; set; }
+        public virtual DbSet<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -218,6 +224,11 @@ namespace Infrastructure.Data
                     .WithMany(p => p.tblMenuiIDUsarioInactivacionNavigation)
                     .HasForeignKey(d => d.iIDUsuarioInactivacion)
                     .HasConstraintName("FK_tblMenu_tblUsuarios_Inactivacion");
+
+                entity.HasOne(d => d.iIDPadreNavigation)
+                    .WithMany(p => p.InverseiIDPadreNavigation)
+                    .HasForeignKey(d => d.iIDPadre)
+                    .HasConstraintName("FK_tblMenu_tblMenu");
             });
 
             modelBuilder.Entity<tblPerfiles>(entity =>
@@ -369,6 +380,7 @@ namespace Infrastructure.Data
                     .HasConstraintName("FK_tblMultivaloresIdiomas_tblMultivalores");
 
             });
+            
             modelBuilder.Entity<tblIdiomas>(entity =>
             {
                 entity.ToTable("tblIdiomas", "administrativo");
@@ -408,6 +420,7 @@ namespace Infrastructure.Data
             
 
             });
+            
             modelBuilder.Entity<tblEntidadUsuario>(entity =>
             {
                 entity.ToTable("tblEntidadUsuario", "seguridad");
@@ -490,6 +503,254 @@ namespace Infrastructure.Data
                .HasForeignKey(d => d.iIDPerfil)
                .HasConstraintName("FK_tblUsuariosPerfiles_tblPerfil");
 
+            });
+
+            modelBuilder.Entity<tblEntidadParametros>(entity =>
+            {
+                entity.ToTable("tblEntidadParametros", "administrativo");
+
+                entity.HasKey(e => e.iIDEntidadParametro);
+
+                entity.Property(e => e.iTipoParametro).HasColumnType("int");
+
+                entity.Property(e => e.tCodigo).HasColumnType("text");
+
+                entity.Property(e => e.tDescripcion).HasColumnType("text");
+
+                entity.Property(e => e.dValor).HasColumnType("numeric");
+
+                entity.Property(e => e.dtValor).HasColumnType("date");
+
+                entity.Property(e => e.bValor).HasColumnType("bool");
+
+                entity.Property(e => e.tValor).HasColumnType("text");
+
+                entity.Property(e => e.iValor).HasColumnType("int");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblEntidadNavigation)
+                      .WithMany(p => p.tblEntidadParametrosNavigation)
+                      .HasForeignKey(d => d.iIDEntidad)
+                      .HasConstraintName("FK_tblEntidadParametros_tblEntidad");
+
+                entity.HasOne(d => d.tblParametrosNavigation)
+                      .WithMany(p => p.tblEntidadParametrosNavigation)
+                      .HasForeignKey(d => d.iIDParametro)
+                      .HasConstraintName("FK_tblEntidadParametros_tblParametros");
+
+                entity.HasOne(d => d.tblUsuarioInsercionNavigation)
+                      .WithMany(p => p.tblEntidadParametrosUsuarioInsercionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblEntidadParametros_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblEntidadParametrosUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblEntidadParametros_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblEntidadParametrosUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblEntidadParametros_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblParametros>(entity =>
+            {
+                entity.ToTable("tblParametros", "administrativo");
+
+                entity.HasKey(e => e.iIDParametro);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioInsercionNavigation)
+                      .WithMany(p => p.tblParametrosUsuarioInsercionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblParametros_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblParametrosUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblParametros_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblParametrosUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblParametros_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblParametrosIdiomas>(entity =>
+            {
+                entity.ToTable("tblParametrosIdiomas", "administrativo");
+
+                entity.HasKey(e => e.iIDParametrosIdiomas);
+
+                entity.Property(e => e.tParametroNombre).HasColumnType("text");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblIdiomasNavigation)
+                      .WithMany(p => p.tblParametrosIdiomasNavigation)
+                      .HasForeignKey(d => d.iIDIdioma)
+                      .HasConstraintName("FK_tblParametrosIdiomas_tblIdiomas");
+
+                entity.HasOne(d => d.tblParametrosNavigation)
+                      .WithMany(p => p.tblParametrosIdiomasNavigation)
+                      .HasForeignKey(d => d.iIDParametro)
+                      .HasConstraintName("FK_tblParametrosIdiomas_tblParametros");
+
+                entity.HasOne(d => d.tblUsuarioInsercionNavigation)
+                      .WithMany(p => p.tblParametrosIdiomasUsuarioInsercionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblParametrosIdiomas_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblParametrosIdiomasUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblParametrosIdiomas_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblParametrosIdiomasUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_ParametrosIdiomas_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblEntidadPasswordSettings>(entity =>
+            {
+                entity.ToTable("tblEntidadPasswordSettings", "seguridad");
+
+                entity.HasKey(e => e.iIDEntidadPasswordSetting);
+
+                entity.Property(e => e.iValorMinimo).HasColumnType("int");
+
+                entity.Property(e => e.iValorMaximo).HasColumnType("int");
+
+                entity.Property(e => e.bRequerido).HasColumnType("bool");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblEntidadNavigation)
+                      .WithMany(p => p.tblEntidadPasswordSettingsNavigation)
+                      .HasForeignKey(d => d.iIDEntidad)
+                      .HasConstraintName("FK_tblEntidadPasswordSettings_tblEntidad");
+
+                entity.HasOne(d => d.tblPasswordSettingsNavigation)
+                      .WithMany(p => p.tblEntidadPasswordSettingsNavigation)
+                      .HasForeignKey(d => d.iIDPasswordSetting)
+                      .HasConstraintName("FK_tblEntidadPasswordSettings_tblPasswordSettings");
+
+                entity.HasOne(d => d.tblUsuarioInsercionNavigation)
+                      .WithMany(p => p.tblEntidadPasswordSettingsUsuarioInsercionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblEntidadPasswordSettings_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblEntidadPasswordSettingsUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblEntidadPasswordSettings_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblEntidadPasswordSettingsUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblEntidadPasswordSettings_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblPasswordSettings>(entity =>
+            {
+                entity.ToTable("tblPasswordSettings", "seguridad");
+
+                entity.HasKey(e => e.iIDPasswordSetting);
+
+                entity.Property(e => e.tExpresionRegular).HasColumnType("text");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioInsercionNavigation)
+                      .WithMany(p => p.tblPasswordSettingsUsuarioInsercionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblPasswordSettings_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblPasswordSettingsUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblPasswordSettings_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblPasswordSettingsUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblPasswordSettings_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblPasswordSettingsIdiomas>(entity =>
+            {
+                entity.ToTable("tblPasswordSettingsIdiomas", "seguridad");
+
+                entity.HasKey(e => e.iIDPasswordSettingIdioma);
+
+                entity.Property(e => e.tSettingDescripcion).HasColumnType("text");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblPasswordSettingsNavigation)
+                      .WithMany(p => p.tblPasswordSettingsIdiomasNavigation)
+                      .HasForeignKey(d => d.iIDPasswordSetting)
+                      .HasConstraintName("FK_tblPasswordSettingsIdiomas_tblPasswordSettings");
+
+                entity.HasOne(d => d.tblIdiomasNavigation)
+                      .WithMany(p => p.tblPasswordSettingsIdiomasNavigation)
+                      .HasForeignKey(d => d.iIDIdioma)
+                      .HasConstraintName("FK_tblPasswordSettingsIdiomas_tblIdiomas");
+
+                entity.HasOne(d => d.tblUsuarioInsercionNavigation)
+                      .WithMany(p => p.tblPasswordSettingsIdiomasUsuarioInsercionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblPasswordSettingsIdiomas_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblPasswordSettingsIdiomasUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblPasswordSettingsIdiomas_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblPasswordSettingsIdiomasUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblPasswordSettingsIdiomas_tblUsuarios_Inactivacion");
             });
 
             //---------

@@ -182,13 +182,17 @@ namespace WebApiAhisrisk.Controllers.Seguridad
         {
             try
             {
-                if (!GetUserId(out int iIDUsuario))
-                {
-                    return Unauthorized();
-                }
+                //if (!GetUserId(out int iIDUsuario) || 
+                //    !GetPerfilId(out int iIDPerfil)) 
+                //{
+                //    return Unauthorized();
+                //}
 
-                var res = await GetMenusList();
-                return Ok(res);
+                var menus = (await GetMenusList(1))
+                .Where(x => !x.iIDPadre.HasValue)
+                .Select(Parse);
+
+                return Ok(menus);
             }
             catch (Exception ex)
             {
@@ -442,21 +446,21 @@ namespace WebApiAhisrisk.Controllers.Seguridad
                 throw;
             }
         }
-        private async Task<List<mMenuLista>> GetMenusList()
+        private async Task<List<tblMenu>> GetMenusList(int iIDPerfil)
         {
             try
             {
-                var res = await _context.tblMenu.Where(x => x.bActivo == true)
-                  .Select(x => new mMenuLista
-                  {
-                      id = x.iIDMenu,
-                      title = x.tDescripcion,
-                      posicion = x.iPosicion,
-                      link = x.tUrl,
-                      icon = x.tIcono
-                  })
-                  .ToListAsync();
+
+                var res = await (from mp in _context.tblMenuPerfiles
+                                 join m in _context.tblMenu on new { mp.iIDMenu, mp.bActivo } equals new { iIDMenu = (int?)m.iIDMenu, m.bActivo }
+
+                                 join p in _context.tblPerfiles on new { mp.iIDPerfil, mp.bActivo } equals new { iIDPerfil = (int?)p.iIDPerfil, p.bActivo }
+                                 where mp.bActivo == true && mp.iIDPerfil == iIDPerfil
+                                 orderby m.iIDMenu ascending
+                                 select (m)
+                                ).ToListAsync();
                 return res;
+
             }
             catch (Exception ex)
             {
@@ -465,6 +469,33 @@ namespace WebApiAhisrisk.Controllers.Seguridad
                 throw;
             }
         }
+
+        private static mMenuLista Parse(tblMenu menu) => new()
+        {
+            id = menu.iIDMenu,
+            title = menu.tDescripcion,
+            icon = menu.tIcono,
+            posicion = menu.iPosicion,
+            link = ParseLink(menu.tUrl),
+            //children = menu.InverseiIDPadreNavigation.Select(Parse).ToList()
+            children = menu.InverseiIDPadreNavigation.Any()
+               ? menu.InverseiIDPadreNavigation.Select(Parse).ToList()
+               : null
+        };
+
+        private static string ParseLink(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return null;
+
+                int pos = url.IndexOf('?');
+                if (pos >= 0)
+                    url = url.Substring(0, pos);
+            
+            return url;
+        }
+
+
         #endregion
 
     }
