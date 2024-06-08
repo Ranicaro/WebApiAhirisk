@@ -108,8 +108,6 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 throw;
             }
         }
-
-
         [HttpGet]
         public async Task<IActionResult> GetListarUsuarios()
         {
@@ -144,7 +142,7 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 usuario.tSegundoNombre = usuarioN.tSegundoNombre;
                 usuario.tPrimerApellido = usuarioN.tPrimerApellido;
                 usuario.tSegundoApellido = usuarioN.tSegundoApellido;
-                usuario.tUsuario = usuarioN.tPrimerNombre;
+                usuario.tUsuario = usuarioN.tUsuario;
                 usuario.tEmail = usuarioN.tEmail;
                 usuario.tPassword = usuarioN.tPassword;
 
@@ -164,7 +162,6 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 return null;
             }
         }
-
         private async Task<bool> ValidarEmail(string? tEmail)
         {
             try
@@ -230,7 +227,6 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 throw;
             }
         }
-
         private async Task<List<mUsuarios>> ListarUsuarios()
         {
             try
@@ -293,7 +289,6 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 throw;
             }
         }
-
         public async Task<string> CrearUsuarioEntidad(mUsuarioEntidad usuarioE)
         {
             try

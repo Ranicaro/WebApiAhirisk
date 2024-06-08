@@ -25,4 +25,11 @@
         public int? iIDPerfil { get; set; }
         public int? timeExpire { get; set; }
     }
+    public class MPasswordSetting
+    {
+        public int? iIDPasswordSettingIdioma { get; set; }
+        public string? tDescripcion { get; set; }
+        public int? iValorMinimo { get; set; }
+        public string? tDescripcionConcatenada { get; set; }
+    }
 }

@@ -149,6 +149,74 @@ namespace WebApiAhirisk.Controllers
                 throw;
             }           
         }
+       
+        [HttpGet, AllowAnonymous]
+        public async Task<IEnumerable<MPasswordSetting>> PasswordSettings(int? iIDEntidad)
+        {
+            try
+            {
+                var parametrosPassword = await (from eps in _context.tblEntidadPasswordSettings
+                                                join ps in _context.tblPasswordSettings on eps.iIDPasswordSetting equals ps.iIDPasswordSetting
+                                                join psi in _context.tblPasswordSettingsIdiomas on ps.iIDPasswordSetting equals psi.iIDPasswordSetting
+                                                where eps.iIDEntidad == 1 && eps.bActivo == true
+                                                select new MPasswordSetting
+                                                {
+                                                    iIDPasswordSettingIdioma = psi.iIDPasswordSettingIdioma,
+                                                    tDescripcion = psi.tSettingDescripcion,
+                                                    iValorMinimo = eps.iValorMinimo
+                                                }
+                                 ).ToListAsync();
+                var listaCondiciones = new List<MPasswordSetting>();
+
+                foreach (MPasswordSetting ps in parametrosPassword)
+                {
+                    listaCondiciones.Add(ps);
+
+                    if (ps.iIDPasswordSettingIdioma == 1)
+                    {
+                        ps.tDescripcionConcatenada = "Contener " + ps.iValorMinimo + " Letra(s) Mayúscula(s).";
+                    }
+                    else if (ps.iIDPasswordSettingIdioma == 2)
+                    {
+                        ps.tDescripcionConcatenada = "Contener " + ps.iValorMinimo + " Letra(s) Minúscula(s).";
+                    }
+                    else if (ps.iIDPasswordSettingIdioma == 3)
+                    {
+                        ps.tDescripcionConcatenada = "Contener " + ps.iValorMinimo + " Número(s).";
+                    }
+                    else if (ps.iIDPasswordSettingIdioma == 4)
+                    {
+                        ps.tDescripcionConcatenada = "Contener " + ps.iValorMinimo + " Caractér(es) Especial(es).";
+                    }
+                    else if (ps.iIDPasswordSettingIdioma == 5)
+                    {
+                        ps.tDescripcionConcatenada = "La contraseña no debe estar incluida en el usuario.";
+                    }
+                    else if (ps.iIDPasswordSettingIdioma == 6)
+                    {
+                        ps.tDescripcionConcatenada = "La contraseña no debe de haber sido utilizada últimamente.";
+                    }
+                    else if (ps.iIDPasswordSettingIdioma == 7)
+                    {
+                        ps.tDescripcionConcatenada = "La contraseña debe tener un tamaño mínimo de: " + ps.iValorMinimo + "caracteres.";
+                    }
+                }
+                if (parametrosPassword.Count > 0)
+                {
+                    return listaCondiciones;
+                }
+                else
+                {
+                    return new List<MPasswordSetting>();
+                }
+            }
+            catch (Exception ex)
+            {
+                GenericUtils.Log("AccountController: Error en el método de PasswordSetting ", ex);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Metodos
