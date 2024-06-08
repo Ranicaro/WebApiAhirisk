@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebApiAhisrisk")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec0eb62703e829a4acc678320d33c1fdfdd4198c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebApiAhisrisk")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebApiAhisrisk")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

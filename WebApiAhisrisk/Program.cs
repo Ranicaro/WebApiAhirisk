@@ -1,4 +1,5 @@
 using ApplicationCore.Interfaces;
+using ApplicationCore.Interfaces.Configuracion.Email;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Principal;
 using System.Text;
 using WebApiAhirisk.Services;
+using WebApiAhisrisk.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +63,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddTransient<ITokenGenerator, TokenGenerator>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 var app = builder.Build();
 

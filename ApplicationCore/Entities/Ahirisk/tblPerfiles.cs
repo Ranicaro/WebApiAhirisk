@@ -27,9 +27,9 @@ namespace ApplicationCore.Entities.Ahirisk
         public bool? bActivo { get; set; }
 
 
-        public virtual tblUsuarios iIDUsuarioCreacionNavigation { get; set; }
-        public virtual tblUsuarios iIDUsuarioModificacionNavigation { get; set; }
-        public virtual tblUsuarios iIDUsuarioInactivacionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuariosCreacionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuariosModificacionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuariosInactivacionNavigation { get; set; }
         public virtual ICollection<tblEntidadPerfiles> tblEntidadPerfilesNavigation { get; set; }
         public virtual ICollection<tblMenuPerfiles> tblMenuPerfilesNavigation { get; set; }
         public virtual ICollection<tblUsuariosPerfiles> tblUsuariosPerfilesNavigation { get; set; }

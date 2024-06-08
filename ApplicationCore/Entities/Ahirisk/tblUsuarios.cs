@@ -52,29 +52,33 @@ namespace ApplicationCore.Entities.Ahirisk
             tblUsuariosPerfilesiIDUsarioInactivacionNavigation = new HashSet<tblUsuariosPerfiles>();
             tblUsuariosPerfilesiIDUsarioUsuarioNavigation = new HashSet<tblUsuariosPerfiles>();
 
-            tblEntidadParametrosUsuarioInsercionNavigation = new HashSet<tblEntidadParametros>();
+            tblEntidadParametrosUsuarioCreacionNavigation = new HashSet<tblEntidadParametros>();
             tblEntidadParametrosUsuarioModificacionNavigation = new HashSet<tblEntidadParametros>();
             tblEntidadParametrosUsuarioInactivacionNavigation = new HashSet<tblEntidadParametros>();
 
-            tblParametrosUsuarioInsercionNavigation = new HashSet<tblParametros>();
+            tblParametrosUsuarioCreacionNavigation = new HashSet<tblParametros>();
             tblParametrosUsuarioModificacionNavigation = new HashSet<tblParametros>();
             tblParametrosUsuarioInactivacionNavigation = new HashSet<tblParametros>();
 
-            tblParametrosIdiomasUsuarioInsercionNavigation = new HashSet<tblParametrosIdiomas>();
+            tblParametrosIdiomasUsuarioCreacionNavigation = new HashSet<tblParametrosIdiomas>();
             tblParametrosIdiomasUsuarioModificacionNavigation = new HashSet<tblParametrosIdiomas>();
             tblParametrosIdiomasUsuarioInactivacionNavigation = new HashSet<tblParametrosIdiomas>();
 
-            tblEntidadPasswordSettingsUsuarioInsercionNavigation = new HashSet<tblEntidadPasswordSettings>();
+            tblEntidadPasswordSettingsUsuarioCreacionNavigation = new HashSet<tblEntidadPasswordSettings>();
             tblEntidadPasswordSettingsUsuarioModificacionNavigation = new HashSet<tblEntidadPasswordSettings>();
             tblEntidadPasswordSettingsUsuarioInactivacionNavigation = new HashSet<tblEntidadPasswordSettings>();
 
-            tblPasswordSettingsUsuarioInsercionNavigation = new HashSet<tblPasswordSettings>();
+            tblPasswordSettingsUsuarioCreacionNavigation = new HashSet<tblPasswordSettings>();
             tblPasswordSettingsUsuarioModificacionNavigation = new HashSet<tblPasswordSettings>();
             tblPasswordSettingsUsuarioInactivacionNavigation = new HashSet<tblPasswordSettings>();
 
-            tblPasswordSettingsIdiomasUsuarioInsercionNavigation = new HashSet<tblPasswordSettingsIdiomas>();
+            tblPasswordSettingsIdiomasUsuarioCreacionNavigation = new HashSet<tblPasswordSettingsIdiomas>();
             tblPasswordSettingsIdiomasUsuarioModificacionNavigation = new HashSet<tblPasswordSettingsIdiomas>();
             tblPasswordSettingsIdiomasUsuarioInactivacionNavigation = new HashSet<tblPasswordSettingsIdiomas>();
+
+            tblEmailNotificacionesUsuarioCreacionNavigation = new HashSet<tblEmailNotificaciones>();
+            tblEmailNotificacionesUsuarioModificacionNavigation = new HashSet<tblEmailNotificaciones>();
+            tblEmailNotificacionesUsuarioInactivacionNavigation = new HashSet<tblEmailNotificaciones>();
         }
 
         public int iIDUsuario { get; set; }
@@ -144,29 +148,33 @@ namespace ApplicationCore.Entities.Ahirisk
         public virtual ICollection<tblUsuariosPerfiles> tblUsuariosPerfilesiIDUsarioInactivacionNavigation { get; set; }
         public virtual ICollection<tblUsuariosPerfiles> tblUsuariosPerfilesiIDUsarioUsuarioNavigation { get; set; }
 
-        public virtual ICollection<tblEntidadParametros> tblEntidadParametrosUsuarioInsercionNavigation { get; set; }
+        public virtual ICollection<tblEntidadParametros> tblEntidadParametrosUsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tblEntidadParametros> tblEntidadParametrosUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblEntidadParametros> tblEntidadParametrosUsuarioInactivacionNavigation { get; set; }
 
-        public virtual ICollection<tblParametros> tblParametrosUsuarioInsercionNavigation { get; set; }
+        public virtual ICollection<tblParametros> tblParametrosUsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tblParametros> tblParametrosUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblParametros> tblParametrosUsuarioInactivacionNavigation { get; set; }
 
-        public virtual ICollection<tblParametrosIdiomas> tblParametrosIdiomasUsuarioInsercionNavigation { get; set; }
+        public virtual ICollection<tblParametrosIdiomas> tblParametrosIdiomasUsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tblParametrosIdiomas> tblParametrosIdiomasUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblParametrosIdiomas> tblParametrosIdiomasUsuarioInactivacionNavigation { get; set; }
 
-        public virtual ICollection<tblEntidadPasswordSettings> tblEntidadPasswordSettingsUsuarioInsercionNavigation { get; set; }
+        public virtual ICollection<tblEntidadPasswordSettings> tblEntidadPasswordSettingsUsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tblEntidadPasswordSettings> tblEntidadPasswordSettingsUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblEntidadPasswordSettings> tblEntidadPasswordSettingsUsuarioInactivacionNavigation { get; set; }
 
-        public virtual ICollection<tblPasswordSettings> tblPasswordSettingsUsuarioInsercionNavigation { get; set; }
+        public virtual ICollection<tblPasswordSettings> tblPasswordSettingsUsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tblPasswordSettings> tblPasswordSettingsUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblPasswordSettings> tblPasswordSettingsUsuarioInactivacionNavigation { get; set; }
 
-        public virtual ICollection<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomasUsuarioInsercionNavigation { get; set; }
+        public virtual ICollection<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomasUsuarioCreacionNavigation { get; set; }
         public virtual ICollection<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomasUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomasUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblEmailNotificaciones> tblEmailNotificacionesUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblEmailNotificaciones> tblEmailNotificacionesUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblEmailNotificaciones> tblEmailNotificacionesUsuarioInactivacionNavigation { get; set; }
 
     }
 }

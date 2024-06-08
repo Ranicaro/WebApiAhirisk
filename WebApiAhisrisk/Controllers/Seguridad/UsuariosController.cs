@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities.Ahirisk;
+using ApplicationCore.Interfaces.Configuracion.Email;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,13 @@ namespace WebApiAhirisk.Controllers.Seguridad
     public class UsuariosController : BaseController
     {
         #region Dependency
-
+        private readonly IEmailService _emailService;
         private readonly DBAhiriskV1Context _context;
 
-        public UsuariosController(DBAhiriskV1Context context)
+        public UsuariosController(DBAhiriskV1Context context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         #endregion
@@ -40,15 +42,16 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 {
                     return BadRequest("Este Correo ya existe intente con uno nuevo");
                 }
-                //Guid tContrasenna = Guid.NewGuid();
-                //usuario.tPassword = tContrasenna.ToString().Substring(0, 10);
-                var resiIDUsuario = await CrearUsuario(usuario, 1);
-                if (resiIDUsuario == null)
+                Guid tContrasenna = Guid.NewGuid();
+                var tContrasenna1 = tContrasenna.ToString().Substring(0, 10);
+                usuario.tPassword = tContrasenna.ToString().Substring(0, 10);
+                var resCrearUsuario = await CrearUsuario(usuario, 1);
+                if (resCrearUsuario == null)
                 {
                     return StatusCode(500, "No se pudo crear el usuario, Comuniquese con la mesa de servicio");
                 }
                 mUsuarioEntidad usuarioE = new mUsuarioEntidad();
-                usuarioE.iIDUsuario = resiIDUsuario;
+                usuarioE.iIDUsuario = resCrearUsuario.iIDUsuario;
                 usuarioE.iIDEntidad = 1;
                 usuarioE.iIDUsuarioCreacion = 1;
                 var resCrearEntidadUsuario = await CrearUsuarioEntidad(usuarioE);
@@ -63,14 +66,14 @@ namespace WebApiAhirisk.Controllers.Seguridad
                     iIDPerfil = 1
                 };
                 mListPerfil.Add(perfil);
-                var resCrearUsuarioPerfil = await CrearUsuarioPerfil(mListPerfil, resiIDUsuario, 1);
+                var resCrearUsuarioPerfil = await CrearUsuarioPerfil(mListPerfil, resCrearUsuario.iIDUsuario, 1);
 
 
                 if (!resCrearUsuarioPerfil.Contains("PerfilUsuario Creado Correctamente"))
                 {
                     return BadRequest("Error al crear UsuarioPerfil, Comunicarse con la mesa de servicio ");
                 }
-
+                var resEnviarCorreo = await EnviarCorreoUsuarioCreado(resCrearUsuario.tPrimerNombre, resCrearUsuario.tEmail, tContrasenna1.ToString(), resCrearUsuario.tUsuario);
                 return Ok("El usuario se registro correctamente");
             }
             catch (Exception ex)
@@ -132,7 +135,7 @@ namespace WebApiAhirisk.Controllers.Seguridad
 
         #region Methods
 
-        private async Task<int?> CrearUsuario(mCrearUsuario usuarioN, int iIDUsuario)
+        private async Task<tblUsuarios> CrearUsuario(mCrearUsuario usuarioN, int iIDUsuario)
         {
             try
             {
@@ -154,12 +157,12 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 _context.tblUsuarios.Add(usuario);
                 await _context.SaveChangesAsync();
 
-                return usuario.iIDUsuario;
+                return usuario;
             }
             catch (Exception ex)
             {
                 await GenericUtils.Log("UsuariosController: Error en el Metodo CrearUsuario ", ex);
-                return null;
+                throw;
             }
         }
         private async Task<bool> ValidarEmail(string? tEmail)
@@ -308,6 +311,59 @@ namespace WebApiAhirisk.Controllers.Seguridad
             {
                 await GenericUtils.Log("UsuarioController: Error en el metodo de CrearUsuarioEntidad ", ex);
                 return "Error: Creando UsuarioEntidad ";
+            }
+        }
+        public async Task<bool> EnviarCorreoUsuarioCreado(string tNombre, string tCorreo, string tCodigo, string tUsuario)
+        {
+            try
+            {
+                string body = $@"
+                               <html>
+                                <head>
+                                    <style>
+                                        h1 {{
+                                            color: rgb(20,79,84);
+                                        }}
+                                        p {{
+                                            font-size: 18px;
+                                            font-family: Latto, sans-serif;
+                                            color: black
+                                        }}
+                                        .Recuerda-text {{
+                                            font-size: 25px;
+                                            font-family: Latto, sans-serif;                                          
+                                            color: #289CA6;
+                                            text-align: left;
+                                        }}
+                                        .Usuario-text {{
+                                            font-size: 18px;
+                                            font-family: Latto, sans-serif;                                           
+                                            color: #289CA6;
+                                            text-align: left;
+                                        }}
+                                    </style>
+                                </head>
+                                <body>
+                                    <h1>¡Hola, {tNombre}!</h1>
+                                    <p>Te damos la bienvenida a Ahirisk. Tu registro ha sido exitoso. </p>
+                                    <p>A continuación, te proporcionamos tus credenciales de inicio de sesión:</p>
+                                    <span class='Recuerda-text'>Recuerda que puedes iniciar sesión con el correo o el usuario</span> </p>
+                                    <p>Usuario: <span class='Usuario-text'>{tUsuario}</span> </p>
+                                    <p>Correo: <span class='Usuario-text'>{tCorreo}</span> </p>
+                                    <p>Contraseña: <span class='Usuario-text'>{tCodigo}</span> </p>
+
+                                    <p>Puedes iniciar sesión en ProzessLaw utilizando estas credenciales. Recuerda cambiar tu contraseña después de tu primer inicio de sesión.</p>
+                                    <p>Si tienes problemas puedes comunicarte con la mesa de servicio</p>
+                                </body>
+                                </html>";
+
+                await _emailService.SendAsync(body, "Bienvenido a Ahirisk", new List<string> { tCorreo }, MimeKit.Text.TextFormat.Html);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el método de EnviarCorreoRecuperarContrasenna", ex);
+                return false;
             }
         }
         #endregion

@@ -30,9 +30,9 @@ namespace ApplicationCore.Entities.Ahirisk
         public bool? bVisible { get; set; }
         public bool? bActivo { get; set; }
 
-        public virtual tblUsuarios iIDUsuarioCreacionNavigation { get; set; }
-        public virtual tblUsuarios iIDUsuarioModificacionNavigation { get; set; }
-        public virtual tblUsuarios iIDUsuarioInactivacionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuariosCreacionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuariosModificacionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuariosInactivacionNavigation { get; set; }
         public virtual tblMenu iIDPadreNavigation { get; set; }
         public virtual ICollection<tblMenuPerfiles> tblMenuPerfilesNavigation { get; set; }
 

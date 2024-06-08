@@ -12,8 +12,8 @@ namespace ApplicationCore.Entities.Ahirisk
         public int? iIDPasswordSetting { get; set; }
         public int? iIDIdioma { get; set; }
         public string? tSettingDescripcion { get; set; }
-        public int? iIDUsuarioInsercion { get; set; }
-        public DateTime? dtFechaInsercion { get; set; }
+        public int? iIDUsuarioCreacion { get; set; }
+        public DateTime? dtFechaCreacion { get; set; }
         public int? iIDUsuarioModificacion { get; set; }
         public DateTime? dtFechaModificacion { get; set; }
         public int? iIDUsuarioInactivacion { get; set; }
@@ -22,7 +22,7 @@ namespace ApplicationCore.Entities.Ahirisk
 
         public virtual tblIdiomas tblIdiomasNavigation { get; set; }
         public virtual tblPasswordSettings tblPasswordSettingsNavigation { get; set; }
-        public virtual tblUsuarios tblUsuarioInsercionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuarioCreacionNavigation { get; set; }
         public virtual tblUsuarios tblUsuarioModificacionNavigation { get; set; }
         public virtual tblUsuarios tblUsuarioInactivacionNavigation { get; set; }
     }

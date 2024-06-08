@@ -19,8 +19,8 @@ namespace ApplicationCore.Entities.Ahirisk
         public bool? bValor { get; set; }
         public string? tValor { get; set; }
         public int? iValor { get; set; }
-        public DateTime? dtFechaInsercion { get; set; }
-        public int? iIDUsuarioInsercion { get; set; }
+        public DateTime? dtFechaCreacion { get; set; }
+        public int? iIDUsuarioCreacion { get; set; }
         public DateTime? dtFechaModificacion { get; set; }
         public int? iIDUsuarioModificacion { get; set; }
         public DateTime? dtFechaInactivacion { get; set; }
@@ -29,7 +29,7 @@ namespace ApplicationCore.Entities.Ahirisk
 
         public virtual tblEntidad tblEntidadNavigation { get; set; }
         public virtual tblParametros tblParametrosNavigation { get; set; }
-        public virtual tblUsuarios tblUsuarioInsercionNavigation { get; set; }
+        public virtual tblUsuarios tblUsuarioCreacionNavigation { get; set; }
         public virtual tblUsuarios tblUsuarioModificacionNavigation { get; set; }
         public virtual tblUsuarios tblUsuarioInactivacionNavigation { get; set; }
     }
