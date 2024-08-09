@@ -2,13 +2,13 @@
 {
     public class mLogin
     {
-        public string tEmail { get; set; } 
+        public string tEmail { get; set; }
         public string tPassword { get; set; }
     }
     public class mToken
     {
         public string iIDUsuario { get; set; }
-        public string tEmail { get; set;}
+        public string tEmail { get; set; }
         public string tNombre { get; set; }
         public string tUsuario { get; set; }
 
@@ -32,4 +32,11 @@
         public int? iValorMinimo { get; set; }
         public string? tDescripcionConcatenada { get; set; }
     }
+    public class MRecuperarContrasena
+    {
+        public string tEmail { get; set; }
+        public string? tPassword { get; set; }
+        public string? tCodigoCambioPassword { get; set; }
+    }
+
 }

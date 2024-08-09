@@ -788,6 +788,7 @@ namespace Infrastructure.Data
                       .HasConstraintName("FK_tblEntidadParametros_tblUsuarios_Inactivacion");
             });
             //---------
+
         }
     }
 }

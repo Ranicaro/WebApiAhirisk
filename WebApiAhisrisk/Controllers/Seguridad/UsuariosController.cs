@@ -36,12 +36,14 @@ namespace WebApiAhirisk.Controllers.Seguridad
                 //{
                 //    return Unauthorized();
                 //}
-                var resValidarEmail = await ValidarEmail(usuario.tEmail);
 
-                if (resValidarEmail)
-                {
-                    return BadRequest("Este Correo ya existe intente con uno nuevo");
-                }
+                //var resValidarEmail = await ValidarEmail(usuario.tEmail);
+
+                //if (resValidarEmail)
+                //{
+                //    return BadRequest("Este Correo ya existe intente con uno nuevo");
+                //}
+
                 Guid tContrasenna = Guid.NewGuid();
                 var tContrasenna1 = tContrasenna.ToString().Substring(0, 10);
                 usuario.tPassword = tContrasenna.ToString().Substring(0, 10);
@@ -352,7 +354,7 @@ namespace WebApiAhirisk.Controllers.Seguridad
                                     <p>Correo: <span class='Usuario-text'>{tCorreo}</span> </p>
                                     <p>Contraseña: <span class='Usuario-text'>{tCodigo}</span> </p>
 
-                                    <p>Puedes iniciar sesión en ProzessLaw utilizando estas credenciales. Recuerda cambiar tu contraseña después de tu primer inicio de sesión.</p>
+                                    <p>Puedes iniciar sesión en Ahirisk utilizando estas credenciales. Recuerda cambiar tu contraseña después de tu primer inicio de sesión.</p>
                                     <p>Si tienes problemas puedes comunicarte con la mesa de servicio</p>
                                 </body>
                                 </html>";
@@ -362,7 +364,7 @@ namespace WebApiAhirisk.Controllers.Seguridad
             }
             catch (Exception ex)
             {
-                await GenericUtils.Log("AccountController: Error en el método de EnviarCorreoRecuperarContrasenna", ex);
+                await GenericUtils.Log("AccountController: Error en el método de EnviarCorreoUsuarioCreado", ex);
                 return false;
             }
         }

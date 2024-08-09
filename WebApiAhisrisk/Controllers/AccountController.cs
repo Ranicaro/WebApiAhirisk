@@ -15,6 +15,9 @@ using Microsoft.Extensions.Configuration;
 using WebApiAhirisk.Services;
 using ApplicationCore.Interfaces;
 using System.Security.Principal;
+using ApplicationCore.Interfaces.Configuracion.Email;
+using WebApiAhisrisk.Services;
+using ApplicationCore.Entities.Ahirisk;
 
 namespace WebApiAhirisk.Controllers
 {
@@ -26,11 +29,13 @@ namespace WebApiAhirisk.Controllers
         public readonly string secretKey;
         public IConfiguration _configuration;
         private readonly ITokenGenerator _tokenGenerator;
+        private readonly IEmailService _emailService;
 
-        public AccountController(DBAhiriskV1Context context, ITokenGenerator tokenGenerator)
+        public AccountController(DBAhiriskV1Context context, ITokenGenerator tokenGenerator, IEmailService emailService)
         {
             _context = context;            
             _tokenGenerator = tokenGenerator;
+            _emailService = emailService;
         }
 
         #endregion
@@ -217,6 +222,60 @@ namespace WebApiAhirisk.Controllers
             }
         }
 
+        [HttpPost, AllowAnonymous]
+        public async Task<IActionResult> PostEnviarCorreoRecuperarContrasena(MRecuperarContrasena mRecuperarContrasena)
+        {
+            try
+            {
+                var resValidarEmail = await ValidarEmailRecuperacionContrasena(mRecuperarContrasena.tEmail);
+
+                if (resValidarEmail)
+                {
+                    Guid tContrasenna = Guid.NewGuid();
+                    var tCodigoContrasenna = tContrasenna.ToString().Substring(0, 10);
+                    var resEnviarCorreo = await EnviarCorreoRecuperacionContrasena(mRecuperarContrasena.tEmail, tCodigoContrasenna.ToString());
+                    if(resEnviarCorreo == true)
+                    {
+                        var resCambiarContrasenaPorCodigo = await CambiarContrasenaPorCodigo(mRecuperarContrasena.tEmail, tCodigoContrasenna.ToString());
+                    }
+                }
+                else
+                {
+                    return BadRequest("Este correo no se encuentra registrado, por favor intente nuevamente.");
+                }
+
+                return Ok("Se envió el código de recuperación de contraseña a tu correo electrónico.");
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el Servicio PostEnviarCorreoRecuperarContraseña", ex);
+                throw;
+            }
+        }
+
+        [HttpPost, AllowAnonymous]
+        public async Task<IActionResult> PostCambiarContrasena(MRecuperarContrasena mRecuperarContrasena)
+        {
+            try
+            {
+
+                var resVerificacionCodigoContrasena = await VerificacionCodigoCambioContrasena(mRecuperarContrasena);
+
+                if(resVerificacionCodigoContrasena == true)
+                {
+                    var resContrasenaActualizada = await ActualizarContrasena(mRecuperarContrasena);
+                }
+
+                return Ok("Se actualizó la contraseña de manera correcta.");
+
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el Servicio PostActualizarContrasena", ex);
+                throw;
+            }
+        }
+        
         #endregion
 
         #region Metodos
@@ -256,6 +315,148 @@ namespace WebApiAhirisk.Controllers
         //    //    .Where(x => x.bActivo == true && x.iIDPerfilNavigation.bActivo)
         //    //    .AnyAsync(x => x.iIDUsuario == iIDUsuario && x.iIDPerfil == iIDPerfil);
         //}
+        private async Task<bool> ValidarEmailRecuperacionContrasena(string? tEmail)
+        {
+            try
+            {
+                var res = await _context.tblUsuarios.AnyAsync(x => x.bActivo == true && x.tEmail == tEmail);
+                return res;
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("UsuarioController: Error en el metodo ValidarEmail ", ex);
+                throw;
+            }
+        }
+        public async Task<bool> EnviarCorreoRecuperacionContrasena(string tCorreo, string tCodigo)
+        {
+            try
+            {
+                string body = $@"
+                               <html>
+                                <head>
+                                    <style>
+                                        h1 {{
+                                            color: rgb(20,79,84);
+                                        }}
+                                        p {{
+                                            font-size: 18px;
+                                            font-family: Latto, sans-serif;
+                                            color: black
+                                        }}
+                                        .Recuerda-text {{
+                                            font-size: 25px;
+                                            font-family: Latto, sans-serif;                                          
+                                            color: #289CA6;
+                                            text-align: left;
+                                        }}
+                                        .Usuario-text {{
+                                            font-size: 18px;
+                                            font-family: Latto, sans-serif;                                           
+                                            color: #289CA6;
+                                            text-align: left;
+                                        }}
+                                    </style>
+                                </head>
+                                <body>
+                                    <h1>¡Hola!</h1>
+                                    <p>Este es tu codigo de recuperación de contraseña </p>
+                                    <p>A continuación, te proporcionamos tus credenciales de inicio de sesión:</p>
+                                    <p>Contraseña: <span class='Usuario-text'>{tCodigo}</span> </p>
+
+                                    <p>Puedes cambiar tu contraseña en Ahirisk en el modulo de recuperación de contraseña.</p>
+                                    <p>Si tienes problemas puedes comunicarte con la mesa de servicio</p>
+                                </body>
+                                </html>";
+
+                await _emailService.SendAsync(body, "Codigo de recuperación de contraseña Ahirisk", new List<string> { tCorreo }, MimeKit.Text.TextFormat.Html);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el método de EnviarCorreoRecuperarContrasenna", ex);
+                return false;
+            }
+        }
+        public async Task<bool> CambiarContrasenaPorCodigo(string tCorreo, string tCodigo)
+        {
+            try
+            {
+
+               tblUsuarios usuario = await _context.tblUsuarios.Where(x => x.tEmail == tCorreo && x.bActivo == true).FirstOrDefaultAsync();
+               if(usuario != null)
+                {
+                    if (tCorreo != null && usuario.tEmail == tCorreo)
+                    {
+                        usuario.tPassword = tCodigo;
+                    }
+
+                    usuario.dtFechaModificacion = DateTime.UtcNow;
+
+                    _context.Entry(usuario).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el método de CambiarContrasenaPorCodigo", ex);
+                return false;
+            }
+        }
+        public async Task<bool> VerificacionCodigoCambioContrasena(MRecuperarContrasena mRecuperarContrasena)
+        {
+            try
+            {
+                tblUsuarios usuario = await _context.tblUsuarios.Where(x => x.tEmail == mRecuperarContrasena.tEmail && x.bActivo == true).FirstOrDefaultAsync();
+                if(usuario != null)
+                {
+                    if (mRecuperarContrasena.tEmail != null && usuario.tPassword == mRecuperarContrasena.tCodigoCambioPassword)
+                    {
+                        return true;
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el método de VerificacionCodigoCambioContrasena", ex);
+                return false;
+            }
+        }
+        public async Task<bool> ActualizarContrasena(MRecuperarContrasena mRecuperarContrasena)
+        {
+            try
+            {
+                tblUsuarios usuario = await _context.tblUsuarios.Where(x => x.tEmail == mRecuperarContrasena.tEmail && x.bActivo == true).FirstOrDefaultAsync();
+                if (usuario != null)
+                {
+                    if (mRecuperarContrasena.tEmail != null && usuario.tEmail == mRecuperarContrasena.tEmail)
+                    {
+                        usuario.tPassword = mRecuperarContrasena.tPassword;
+                    }
+
+                    usuario.dtFechaModificacion = DateTime.UtcNow;
+
+                    _context.Entry(usuario).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                await GenericUtils.Log("AccountController: Error en el método de ActualizarContrasena", ex);
+                return false;
+            }
+        }
         #endregion
 
 
