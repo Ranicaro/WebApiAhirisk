@@ -33,6 +33,18 @@ namespace Infrastructure.Data
         public virtual DbSet<tblPasswordSettings> tblPasswordSettings { get; set; }
         public virtual DbSet<tblPasswordSettingsIdiomas> tblPasswordSettingsIdiomas { get; set; }
         public virtual DbSet<tblEmailNotificaciones> tblEmailNotificaciones { get; set; }
+        public virtual DbSet<tblProcesos> tblProcesos {  get; set; }
+        public virtual DbSet<tblProcesosPaisIdioma> tblProcesosPaisIdioma { get; set; }
+        public virtual DbSet<tblTipoProcesos> tblTipoProcesos { get; set; }
+        public virtual DbSet<tblTipoProcesosPaisIdioma> tblTipoProcesosPaisIdioma { get; set; }
+        public virtual DbSet<tblProductos> tblProductos { get; set; }
+        public virtual DbSet<tblPaises> tblPaises { get; set; }
+        public virtual DbSet<tblOrganismosControl> tblOrganismosControl { get; set; }
+        public virtual DbSet<tblMetodologiaRiesgo> tblMetodologiaRiesgo { get; set; }
+        public virtual DbSet<tblMetodologiaRiesgoPaisIdioma> tblMetodologiaRiesgoPaisIdioma { get; set; }
+        public virtual DbSet<tblFactoresRiesgo> tblFactoresRiesgo { get; set; }
+        public virtual DbSet<tblFactoresRiesgoPaisIdioma> tblFactoresRiesgoPaisIdioma { get; set; }
+        public virtual DbSet<tblEntidadOrganismosControl> tblEntidadOrganismosControl { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -753,6 +765,7 @@ namespace Infrastructure.Data
                       .HasForeignKey(d => d.iIDUsuarioInactivacion)
                       .HasConstraintName("FK_tblPasswordSettingsIdiomas_tblUsuarios_Inactivacion");
             });
+            
             modelBuilder.Entity<tblEmailNotificaciones>(entity =>
             {
                 entity.ToTable("tblEmailNotificaciones", "administrativo");
@@ -787,8 +800,413 @@ namespace Infrastructure.Data
                       .HasForeignKey(d => d.iIDUsuarioInactivacion)
                       .HasConstraintName("FK_tblEntidadParametros_tblUsuarios_Inactivacion");
             });
+
+            modelBuilder.Entity<tblProcesos>(entity =>
+            {
+                entity.ToTable("tblProcesos", "administrativo");
+
+                entity.HasKey(e => e.iIDProceso);
+
+                //entity.Property(e => e.iIDTipoProceso).HasColumnType("int");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblTipoProcesosPaisIdiomaNavigation)
+                      .WithMany(p => p.tblProcesosNavigation)
+                      .HasForeignKey(d => d.iIDTipoProceso)
+                      .HasConstraintName("FK_tblProcesos_tblTipoProcesosPaisIdioma");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblProcesosUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblProcesos_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblProcesosUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblProcesos_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblProcesosUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblProcesos_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblProcesosPaisIdioma>(entity =>
+            {
+                entity.ToTable("tblProcesosPaisIdioma", "administrativo");
+
+                entity.HasKey(e => e.iIDProcesoPaisIdioma);
+
+                //entity.Property(e => e.iIDProceso).HasColumnType("int");
+
+                entity.Property(e => e.iIDPais).HasColumnType("int");
+
+                entity.Property(e => e.iIDIdioma).HasColumnType("int");
+
+                entity.Property(e => e.tDescripcionProceso).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblProcesosNavigation)
+                      .WithMany(p => p.tblProcesosPaisIdiomaNavigation)
+                      .HasForeignKey(d => d.iIDProceso)
+                      .HasConstraintName("FK_tblProcesosPaisIdioma_tblProcesos");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblProcesosPaisIdiomaUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblProcesosPaisIdioma_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblProcesosPaisIdiomaUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblProcesosPaisIdioma_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblProcesosPaisIdiomaUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblProcesosPaisIdioma_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblTipoProcesos>(entity =>
+            {
+                entity.ToTable("tblTipoProcesos", "administrativo");
+
+                entity.HasKey(e => e.iIDTipoProceso);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblTipoProcesosUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblTipoProcesos_tblUsuarios_Creacion");
+            });
+
+            modelBuilder.Entity<tblTipoProcesosPaisIdioma>(entity =>
+            {
+                entity.ToTable("tblTipoProcesosPaisIdioma", "administrativo");
+
+                entity.HasKey(e => e.iIDTipoProcesosPaisIdioma);
+
+                //entity.Property(e => e.iIDTipoProceso).HasColumnType("int");
+
+                entity.Property(e => e.iIDPais).HasColumnType("int");
+
+                entity.Property(e => e.iIDIdioma).HasColumnType("int");
+
+                entity.Property(e => e.tDescripcionProceso).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblTipoProcesosNavigation)
+                      .WithMany(p => p.tblTipoProcesosPaisIdiomaNavigation)
+                      .HasForeignKey(d => d.iIDTipoProceso)
+                      .HasConstraintName("FK_tblTipoProcesosPaisIdioma_tblTipoProcesos");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblTipoProcesosPaisIdiomaUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblTipoProcesosPaisIdioma_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblTipoProcesosPaisIdiomaUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblTipoProcesosPaisIdioma_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblTipoProcesosPaisIdiomaUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblTipoProcesosPaisIdioma_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblProductos>(entity =>
+            {
+                entity.ToTable("tblProductos", "administrativo");
+
+                entity.HasKey(e => e.iIDProducto);
+
+                entity.Property(e => e.iIDPais).HasColumnType("int");
+
+                entity.Property(e => e.iIDOrganismoControl).HasColumnType("int");
+
+                entity.Property(e => e.tCodigoProducto).HasMaxLength(200);
+
+                entity.Property(e => e.tNombreProducto).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblProductosUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblProductos_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblProductosUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblProductos_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblProductosUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblProductos_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblPaises>(entity =>
+            {
+                entity.ToTable("tblPaises", "administrativo");
+
+                entity.HasKey(e => e.iIDPais);
+
+                entity.Property(e => e.tCodigoSimple).HasMaxLength(200);
+
+                entity.Property(e => e.tCodigoCompuesto).HasMaxLength(200);
+
+                entity.Property(e => e.tCodigoNumero).HasMaxLength(200);
+
+                entity.Property(e => e.tIndTelefonico).HasMaxLength(200);
+
+                entity.Property(e => e.tNombrePais).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaCreacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblPaisesUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioCreacion)
+                      .HasConstraintName("FK_tblPaises_tblUsuarios_Creacion");
+
+            });
+
+            modelBuilder.Entity<tblOrganismosControl>(entity =>
+            {
+                entity.ToTable("tblOrganismosControl", "administrativo");
+
+                entity.HasKey(e => e.iIDOrganismoControl);
+
+                entity.Property(e => e.iIDPais).HasColumnType("int");
+
+                entity.Property(e => e.tSiglaOrganismo).HasMaxLength(200);
+
+                entity.Property(e => e.tNombreOrganismo).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblOrganismosControlUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblOrganismosControl_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblOrganismosControlUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblOrganismosControl_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblOrganismosControlUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblOrganismosControl_tblUsuarios_Inactivacion");
+
+            });
+
+            modelBuilder.Entity<tblMetodologiaRiesgo>(entity =>
+            {
+                entity.ToTable("tblMetodologiaRiesgo", "administrativo");
+
+                entity.HasKey(e => e.iIDMetodologiaRiesgo);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblMetodologiaRiesgoUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblMetodologiaRiesgo_tblUsuarios_Creacion");
+            });
+
+            modelBuilder.Entity<tblMetodologiaRiesgoPaisIdioma>(entity =>
+            {
+                entity.ToTable("tblMetodologiaRiesgoPaisIdioma", "administrativo");
+
+                entity.HasKey(e => e.iIDMetodologiaRiesgoPaisIdioma);
+
+                entity.Property(e => e.iIDMetodologiaRiesgo).HasColumnType("int");
+
+                entity.Property(e => e.iIDPais).HasColumnType("int");
+
+                entity.Property(e => e.iIDIdioma).HasColumnType("int");
+
+                entity.Property(e => e.tSigla).HasMaxLength(200);
+
+                entity.Property(e => e.tDescripcion).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblMetodologiaRiesgoPaisIdiomaUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblMetodologiaRiesgoPaisIdioma_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblMetodologiaRiesgoPaisIdiomaUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblMetodologiaRiesgoPaisIdioma_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblMetodologiaRiesgoPaisIdiomaUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblMetodologiaRiesgoPaisIdioma_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblFactoresRiesgo>(entity =>
+            {
+                entity.ToTable("tblFactoresRiesgo", "administrativo");
+
+                entity.HasKey(e => e.iIDFactorRiesgo);
+
+                entity.Property(e => e.iIDMetodologiaRiesgo).HasColumnType("int");
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblFactoresRiesgoUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblFactoresRiesgo_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblFactoresRiesgoUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblFactoresRiesgo_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblFactoresRiesgoUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblFactoresRiesgo_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblFactoresRiesgoPaisIdioma>(entity =>
+            {
+                entity.ToTable("tblFactoresRiesgoPaisIdioma", "administrativo");
+
+                entity.HasKey(e => e.iIDFactorRiesgoPaisIdioma);
+
+                entity.Property(e => e.iIDFactorRiesgo).HasColumnType("int");
+
+                entity.Property(e => e.iIDPais).HasColumnType("int");
+
+                entity.Property(e => e.iIDIdioma).HasColumnType("int");
+
+                entity.Property(e => e.tDescripcionFactor).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblFactoresRiesgoPaisIdiomaUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblFactoresRiesgoPaisIdioma_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblFactoresRiesgoPaisIdiomaUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblFactoresRiesgoPaisIdioma_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblFactoresRiesgoPaisIdiomaUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblFactoresRiesgoPaisIdioma_tblUsuarios_Inactivacion");
+            });
+
+            modelBuilder.Entity<tblEntidadOrganismosControl>(entity =>
+            {
+                entity.ToTable("tblEntidadOrganismosControl", "administrativo");
+
+                entity.HasKey(e => e.iIDEntidadOrganismoControl);
+
+                entity.Property(e => e.iIDEntidad).HasColumnType("int");
+
+                entity.Property(e => e.iIDOrganismoControl).HasColumnType("int");
+
+                entity.Property(e => e.tCodigoEntidad).HasMaxLength(200);
+
+                entity.Property(e => e.dtFechaInsercion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaModificacion).HasColumnType("date");
+
+                entity.Property(e => e.dtFechaInactivacion).HasColumnType("date");
+
+                entity.Property(e => e.bActivo).HasColumnType("bool");
+
+                entity.HasOne(d => d.tblUsuarioCreacionNavigation)
+                      .WithMany(p => p.tblEntidadOrganismosControlUsuarioCreacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInsercion)
+                      .HasConstraintName("FK_tblEntidadOrganismosControl_tblUsuarios_Creacion");
+
+                entity.HasOne(d => d.tblUsuarioModificacionNavigation)
+                      .WithMany(p => p.tblEntidadOrganismosControlUsuarioModificacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioModificacion)
+                      .HasConstraintName("FK_tblEntidadOrganismosControl_tblUsuarios_Modificacion");
+
+                entity.HasOne(d => d.tblUsuarioInactivacionNavigation)
+                      .WithMany(p => p.tblEntidadOrganismosControlUsuarioInactivacionNavigation)
+                      .HasForeignKey(d => d.iIDUsuarioInactivacion)
+                      .HasConstraintName("FK_tblEntidadOrganismosControl_tblUsuarios_Inactivacion");
+            });
+
             //---------
 
         }
     }
 }
+ 

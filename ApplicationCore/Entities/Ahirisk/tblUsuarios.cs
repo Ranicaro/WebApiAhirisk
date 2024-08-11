@@ -79,6 +79,50 @@ namespace ApplicationCore.Entities.Ahirisk
             tblEmailNotificacionesUsuarioCreacionNavigation = new HashSet<tblEmailNotificaciones>();
             tblEmailNotificacionesUsuarioModificacionNavigation = new HashSet<tblEmailNotificaciones>();
             tblEmailNotificacionesUsuarioInactivacionNavigation = new HashSet<tblEmailNotificaciones>();
+
+            tblProcesosUsuarioCreacionNavigation = new HashSet<tblProcesos>();
+            tblProcesosUsuarioModificacionNavigation = new HashSet<tblProcesos>();
+            tblProcesosUsuarioInactivacionNavigation = new HashSet<tblProcesos>();
+
+            tblProcesosPaisIdiomaUsuarioCreacionNavigation = new HashSet<tblProcesosPaisIdioma>();
+            tblProcesosPaisIdiomaUsuarioModificacionNavigation = new HashSet<tblProcesosPaisIdioma>();
+            tblProcesosPaisIdiomaUsuarioInactivacionNavigation = new HashSet<tblProcesosPaisIdioma>();
+
+            tblTipoProcesosUsuarioCreacionNavigation = new HashSet<tblTipoProcesos>();
+
+            tblTipoProcesosPaisIdiomaUsuarioCreacionNavigation = new HashSet<tblTipoProcesosPaisIdioma>();
+            tblTipoProcesosPaisIdiomaUsuarioModificacionNavigation = new HashSet<tblTipoProcesosPaisIdioma>();
+            tblTipoProcesosPaisIdiomaUsuarioInactivacionNavigation = new HashSet<tblTipoProcesosPaisIdioma>();
+
+            tblProductosUsuarioCreacionNavigation = new HashSet<tblProductos>();
+            tblProductosUsuarioModificacionNavigation = new HashSet<tblProductos>();
+            tblProductosUsuarioInactivacionNavigation = new HashSet<tblProductos>();
+
+            tblPaisesUsuarioCreacionNavigation = new HashSet<tblPaises>();
+            tblPaisesUsuarioModificacionNavigation = new HashSet<tblPaises>();
+            tblPaisesUsuarioInactivacionNavigation = new HashSet<tblPaises>();
+
+            tblOrganismosControlUsuarioCreacionNavigation = new HashSet<tblOrganismosControl>();
+            tblOrganismosControlUsuarioModificacionNavigation = new HashSet<tblOrganismosControl>();
+            tblOrganismosControlUsuarioInactivacionNavigation = new HashSet<tblOrganismosControl>();
+
+            tblMetodologiaRiesgoUsuarioCreacionNavigation = new HashSet<tblMetodologiaRiesgo>();
+
+            tblMetodologiaRiesgoPaisIdiomaUsuarioCreacionNavigation = new HashSet<tblMetodologiaRiesgoPaisIdioma>();
+            tblMetodologiaRiesgoPaisIdiomaUsuarioModificacionNavigation = new HashSet<tblMetodologiaRiesgoPaisIdioma>();
+            tblMetodologiaRiesgoPaisIdiomaUsuarioInactivacionNavigation = new HashSet<tblMetodologiaRiesgoPaisIdioma>();
+
+            tblFactoresRiesgoUsuarioCreacionNavigation = new HashSet<tblFactoresRiesgo>();
+            tblFactoresRiesgoUsuarioModificacionNavigation = new HashSet<tblFactoresRiesgo>();
+            tblFactoresRiesgoUsuarioInactivacionNavigation = new HashSet<tblFactoresRiesgo>();
+
+            tblFactoresRiesgoPaisIdiomaUsuarioCreacionNavigation = new HashSet<tblFactoresRiesgoPaisIdioma>();
+            tblFactoresRiesgoPaisIdiomaUsuarioModificacionNavigation = new HashSet<tblFactoresRiesgoPaisIdioma>();
+            tblFactoresRiesgoPaisIdiomaUsuarioInactivacionNavigation = new HashSet<tblFactoresRiesgoPaisIdioma>();
+
+            tblEntidadOrganismosControlUsuarioCreacionNavigation = new HashSet<tblEntidadOrganismosControl>();
+            tblEntidadOrganismosControlUsuarioModificacionNavigation = new HashSet<tblEntidadOrganismosControl>();
+            tblEntidadOrganismosControlUsuarioInactivacionNavigation = new HashSet<tblEntidadOrganismosControl>();
         }
 
         public int iIDUsuario { get; set; }
@@ -176,5 +220,48 @@ namespace ApplicationCore.Entities.Ahirisk
         public virtual ICollection<tblEmailNotificaciones> tblEmailNotificacionesUsuarioModificacionNavigation { get; set; }
         public virtual ICollection<tblEmailNotificaciones> tblEmailNotificacionesUsuarioInactivacionNavigation { get; set; }
 
+        public virtual ICollection<tblProcesos> tblProcesosUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblProcesos> tblProcesosUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblProcesos> tblProcesosUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblProcesosPaisIdioma> tblProcesosPaisIdiomaUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblProcesosPaisIdioma> tblProcesosPaisIdiomaUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblProcesosPaisIdioma> tblProcesosPaisIdiomaUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblTipoProcesos> tblTipoProcesosUsuarioCreacionNavigation { get; set; }
+
+        public virtual ICollection<tblTipoProcesosPaisIdioma> tblTipoProcesosPaisIdiomaUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblTipoProcesosPaisIdioma> tblTipoProcesosPaisIdiomaUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblTipoProcesosPaisIdioma> tblTipoProcesosPaisIdiomaUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblProductos> tblProductosUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblProductos> tblProductosUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblProductos> tblProductosUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblPaises> tblPaisesUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblPaises> tblPaisesUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblPaises> tblPaisesUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblOrganismosControl> tblOrganismosControlUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblOrganismosControl> tblOrganismosControlUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblOrganismosControl> tblOrganismosControlUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblMetodologiaRiesgo> tblMetodologiaRiesgoUsuarioCreacionNavigation { get; set; }
+
+        public virtual ICollection<tblMetodologiaRiesgoPaisIdioma> tblMetodologiaRiesgoPaisIdiomaUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblMetodologiaRiesgoPaisIdioma> tblMetodologiaRiesgoPaisIdiomaUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblMetodologiaRiesgoPaisIdioma> tblMetodologiaRiesgoPaisIdiomaUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblFactoresRiesgo> tblFactoresRiesgoUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblFactoresRiesgo> tblFactoresRiesgoUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblFactoresRiesgo> tblFactoresRiesgoUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblFactoresRiesgoPaisIdioma> tblFactoresRiesgoPaisIdiomaUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblFactoresRiesgoPaisIdioma> tblFactoresRiesgoPaisIdiomaUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblFactoresRiesgoPaisIdioma> tblFactoresRiesgoPaisIdiomaUsuarioInactivacionNavigation { get; set; }
+
+        public virtual ICollection<tblEntidadOrganismosControl> tblEntidadOrganismosControlUsuarioCreacionNavigation { get; set; }
+        public virtual ICollection<tblEntidadOrganismosControl> tblEntidadOrganismosControlUsuarioModificacionNavigation { get; set; }
+        public virtual ICollection<tblEntidadOrganismosControl> tblEntidadOrganismosControlUsuarioInactivacionNavigation { get; set; }
     }
 }
