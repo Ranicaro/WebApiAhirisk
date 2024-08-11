@@ -41,11 +41,11 @@ namespace WebApiAhirisk.Controllers.Administrativo
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetProcesosPorTipoProcesoRiesgo(int? iIDTipoProceso)
+        public async Task<IActionResult> GetProcesosPorTipoProcesoRiesgo([FromBody] TipoProcesoRequest request)
         {
             try
             {
-                var procesosPorTipo = await procesosPorTipoProceso(iIDTipoProceso);
+                var procesosPorTipo = await procesosPorTipoProceso(request.iIDTipoProceso);
                 return Ok(procesosPorTipo);
             }
             catch (Exception ex)
@@ -71,11 +71,11 @@ namespace WebApiAhirisk.Controllers.Administrativo
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetFactorRiesgoPorMetodologiaRiesgo(int? iIDMetodologiaRiesgo)
+        public async Task<IActionResult> GetFactorRiesgoPorMetodologiaRiesgo([FromBody] FactorRiesgoRequest request)
         {
             try
             {
-                var factorRiesgo= await factorRiesgoPorMetodologia(iIDMetodologiaRiesgo);
+                var factorRiesgo= await factorRiesgoPorMetodologia(request.iIDMetodologiaRiesgo);
                 return Ok(factorRiesgo);
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace WebApiAhirisk.Controllers.Administrativo
         {
             try
             {
-                var productos = await productoRiesgo(iIDOrganismoControl);
+                var productos = await productoRiesgo(1);
                 return Ok(productos);
             }
             catch (Exception ex)
@@ -179,6 +179,7 @@ namespace WebApiAhirisk.Controllers.Administrativo
                                  from tmrpi in tmrpiGroup.DefaultIfEmpty()
                                  select new mMetodologiaRiesgo
                                  {
+                                     iIDMetodologiaRiesgo = tmrpi.iIDMetodologiaRiesgo,
                                      iIDMetodologiaRiesgoPaisIdioma = tmrpi.iIDMetodologiaRiesgoPaisIdioma,
                                      tSigla = tmrpi.tSigla,
                                      tDescripcion = tmrpi.tDescripcion

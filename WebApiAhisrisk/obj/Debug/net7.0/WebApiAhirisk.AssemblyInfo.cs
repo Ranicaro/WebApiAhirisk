@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebApiAhirisk")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b97bc9a5b5097a1ba0ebcb6a0c7b1b97347bbc05")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc80ad8e56441da01e37368af200095db11bdacc")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebApiAhirisk")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebApiAhirisk")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

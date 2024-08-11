@@ -1,9 +1,15 @@
 ﻿namespace WebApiAhirisk.Models.Administrativo
 {
-    public class mTipoProcesoRiesgo
+    public class TipoProcesoRequest
     {
-       
+        public int? iIDTipoProceso { get; set; }
     }
+
+    public class FactorRiesgoRequest
+    {
+        public int? iIDMetodologiaRiesgo { get; set; }
+    }
+
 
     public class mProcesoRiesgo
     {
